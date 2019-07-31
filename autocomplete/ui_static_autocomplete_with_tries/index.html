@@ -1,0 +1,39 @@
+<html>
+
+<head>
+  <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet"
+    type="text/css" />
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    $(document).ready(function () {
+      $('#search').focus();
+    });
+
+    $(document).ready(function () {
+
+      $("#search").autocomplete({
+        source: function (request, response) {
+          $.ajax({
+            url: "http://localhost:8080/suggestions?query=" + request.term,
+            dataType: "json",
+            success: function (data) {
+              response(data.words);
+            }
+          });
+        }
+      });
+    });
+  </script>
+
+</head>
+
+<body>
+  <div class="autocomplete">
+    <label class="autocomplete-label" for="search">Search here:</label>
+    <input id="search" class="autocomplete-input" name="search" />
+  </div>
+</body>
+
+</html>
